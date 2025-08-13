@@ -1,14 +1,33 @@
-import { FC, memo } from 'react';
 import { BurgerConstructorElementUI } from '@ui';
+import { FC, memo } from 'react';
+import {
+  moveDown,
+  moveUp,
+  removeIngredient
+} from '../../services/constructor/slice';
+import { useDispatch } from '../../services/store';
 import { BurgerConstructorElementProps } from './type';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
-    const handleMoveDown = () => {};
+    const dispatch = useDispatch();
 
-    const handleMoveUp = () => {};
+    const handleMoveDown = () => {
+      if (index < totalItems - 1) {
+        dispatch(moveDown(index));
+      }
+    };
 
-    const handleClose = () => {};
+    const handleMoveUp = () => {
+      if (index > 0) {
+        dispatch(moveUp(index));
+      }
+    };
+
+    const handleClose = () => {
+      dispatch(removeIngredient(index));
+    };
+    const cannotRemove = ingredient.type === 'bun';
 
     return (
       <BurgerConstructorElementUI
@@ -18,6 +37,7 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
         handleMoveUp={handleMoveUp}
         handleMoveDown={handleMoveDown}
         handleClose={handleClose}
+        isLocked={cannotRemove}
       />
     );
   }

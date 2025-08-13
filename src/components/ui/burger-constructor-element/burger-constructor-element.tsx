@@ -12,7 +12,8 @@ export const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> =
       totalItems,
       handleMoveUp,
       handleMoveDown,
-      handleClose
+      handleClose,
+      isLocked
     }) => (
       <li className={`${styles.element} mb-4 mr-2`}>
         <MoveButton
@@ -27,6 +28,7 @@ export const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> =
             price={ingredient.price}
             thumbnail={ingredient.image}
             handleClose={handleClose}
+            isLocked={isLocked}
           />
         </div>
       </li>

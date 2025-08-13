@@ -1,14 +1,117 @@
-import { ConstructorPage } from '@pages';
+import {
+  ConstructorPage,
+  Feed,
+  ForgotPassword,
+  Login,
+  NotFound404,
+  Profile,
+  ProfileOrders,
+  Register,
+  ResetPassword
+} from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
 
-import { AppHeader } from '@components';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { useEffect } from 'react';
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams
+} from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/store';
+import { checkUserAuth } from '../../services/user/actions';
+import { selectUser } from '../../services/user/slice';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route';
 
-const App = () => (
-  <div className={styles.app}>
-    <AppHeader />
-    <ConstructorPage />
-  </div>
-);
+const OrderModal = () => {
+  const { number } = useParams<{ number: string }>();
+  const navigate = useNavigate();
+  const handleClose = () => navigate(-1);
+
+  return (
+    <Modal title={`#${String(number).padStart(6, '0')}`} onClose={handleClose}>
+      <OrderInfo />
+    </Modal>
+  );
+};
+
+const AppRoutes = () => {
+  const location = useLocation();
+  const backgroundLocation = location.state?.background;
+  const navigate = useNavigate();
+
+  const handleClose = () => navigate(-1);
+
+  return (
+    <>
+      <Routes location={backgroundLocation || location}>
+        <Route path='/' element={<ConstructorPage />} />
+        <Route path='/feed' element={<Feed />} />
+
+        <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
+
+        <Route
+          path='/register'
+          element={<OnlyUnAuth component={<Register />} />}
+        />
+
+        <Route
+          path='/forgot-password'
+          element={<OnlyUnAuth component={<ForgotPassword />} />}
+        />
+        <Route
+          path='/reset-password'
+          element={<OnlyUnAuth component={<ResetPassword />} />}
+        />
+        <Route path='/profile' element={<OnlyAuth component={<Profile />} />} />
+        <Route
+          path='/profile/orders'
+          element={<OnlyAuth component={<ProfileOrders />} />}
+        />
+
+        <Route path='*' element={<NotFound404 />} />
+      </Routes>
+
+      {backgroundLocation && (
+        <Routes>
+          <>
+            <Route path='/feed/:number' element={<OrderModal />} />
+            <Route
+              path='/ingredients/:id'
+              element={
+                <Modal title='Детали ингредиента' onClose={handleClose}>
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route
+              path='/profile/orders/:number'
+              element={<OnlyAuth component={<OrderModal />} />}
+            />
+          </>
+        </Routes>
+      )}
+    </>
+  );
+};
+
+const App = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, []);
+
+  return (
+    <div className={styles.app}>
+      <AppHeader />
+      <AppRoutes />
+    </div>
+  );
+};
 
 export default App;
