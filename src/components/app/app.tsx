@@ -21,9 +21,10 @@ import {
   useNavigate,
   useParams
 } from 'react-router-dom';
+import { getIngredients } from '../../services/burger/actions';
+import { selectIngredients } from '../../services/burger/slice';
 import { useDispatch, useSelector } from '../../services/store';
 import { checkUserAuth } from '../../services/user/actions';
-import { selectUser } from '../../services/user/slice';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route';
 
 const OrderModal = () => {
@@ -100,9 +101,12 @@ const AppRoutes = () => {
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const ingredients = useSelector(selectIngredients);
 
   useEffect(() => {
+    if (!ingredients.length) {
+      dispatch(getIngredients());
+    }
     dispatch(checkUserAuth());
   }, []);
 

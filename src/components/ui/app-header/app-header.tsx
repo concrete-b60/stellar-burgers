@@ -5,7 +5,7 @@ import {
   ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
 import { FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styles from './app-header.module.css';
 import { TAppHeaderUIProps } from './type';
 
@@ -43,7 +43,9 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
         </NavLink>
       </div>
       <div className={styles.logo}>
-        <Logo className='' />
+        <Link to='/'>
+          <Logo className='' />
+        </Link>
       </div>
       <div className={styles.link_position_last}>
         <NavLink

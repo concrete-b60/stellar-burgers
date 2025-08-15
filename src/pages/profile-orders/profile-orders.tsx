@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from '../../services/store';
 export const ProfileOrders: FC = () => {
   const dispatch = useDispatch();
   const orders: TOrder[] = useSelector(selectOrders);
-  console.log('orders:', orders);
 
   useEffect(() => {
     dispatch(getOrders());
