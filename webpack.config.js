@@ -14,7 +14,7 @@ module.exports = {
       },
       {
         test: /\.(ts)x?$/,
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!(?:@remix-run\/router)\/).*/,
         use: {
           loader: 'ts-loader'
         }
