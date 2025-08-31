@@ -12,7 +12,7 @@ interface IConstructorState {
   orderError: string | null;
 }
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
   burger: {
     bun: null,
     ingredients: []
@@ -26,9 +26,6 @@ export const burgerConstructorSlice = createSlice({
   name: 'burger-constructor',
   initialState,
   reducers: {
-    setBun(state, action: PayloadAction<TConstructorIngredient>) {
-      state.burger.bun = action.payload;
-    },
     addIngredient(state, action: PayloadAction<TConstructorIngredient>) {
       if (action.payload.type === 'bun') {
         state.burger.bun = action.payload;
@@ -88,7 +85,6 @@ export const burgerConstructorSlice = createSlice({
 });
 
 export const {
-  setBun,
   addIngredient,
   removeIngredient,
   moveUp,
