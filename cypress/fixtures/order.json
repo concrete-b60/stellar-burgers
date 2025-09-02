@@ -1,0 +1,31 @@
+{
+  "success": true,
+  "name": "Флюоресцентный spicy био-марсианский бургер",
+  "order": {
+    "number": 87334,
+    "status": "done",
+    "price": 2490,
+    "name": "Флюоресцентный spicy био-марсианский бургер",
+    "owner": {
+      "name": "Александр",
+      "email": "d-a-s91@yandex.ru"
+    },
+    "ingredients": [
+      {
+        "_id": "643d69a5c3f7b9001cfa093d",
+        "name": "Флюоресцентная булка R2-D3",
+        "type": "bun"
+      },
+      {
+        "_id": "643d69a5c3f7b9001cfa0941",
+        "name": "Биокотлета из марсианской Магнолии",
+        "type": "main"
+      },
+      {
+        "_id": "643d69a5c3f7b9001cfa0942",
+        "name": "Соус Spicy-X",
+        "type": "sauce"
+      }
+    ]
+  }
+}
